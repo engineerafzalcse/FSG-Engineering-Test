@@ -162,11 +162,15 @@ export const fakeProjects = {
     const project: Project = { ...data, id: nextId, created_at: now, updated_at: now };
 
     this.records.push(project);
-    return { success: true as const, message: 'Project created successfully', project };
+    // return { success: true as const, message: 'Project created successfully', project };
 
-    console.log('AFTER CREATE');
-    console.log(this.records.length);
-    console.log(this.records.at(-1));
+    const result = {
+      success: true as const,
+      message: 'Project created successfully',
+      project
+    };
+
+    return result;
   },
 
   async updateProject(id: number, data: ProjectInput) {
