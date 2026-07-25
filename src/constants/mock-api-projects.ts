@@ -90,7 +90,15 @@ function sortProjects(projects: Project[], sort?: string): void {
 export const fakeProjects = {
   records: [] as Project[],
 
+  // initialize(): void {
+  //   this.records = Array.from({ length: 24 }, (_, index) => generateProject(index + 1));
+  // },
+
+  // initialize() update code, this update is Guard active.
+
   initialize(): void {
+    if (this.records.length > 0) return;
+
     this.records = Array.from({ length: 24 }, (_, index) => generateProject(index + 1));
   },
 
@@ -111,6 +119,9 @@ export const fakeProjects = {
   },
 
   async getProjects({ page = 1, limit = 10, statuses, search, sort }: ProjectListFilters) {
+    console.log('GET PROJECTS');
+    console.log(this.records.length);
+
     await delay(150);
     const projects = await this.getAll({ statuses: parseMultiValue(statuses), search });
     sortProjects(projects, sort);
@@ -152,6 +163,10 @@ export const fakeProjects = {
 
     this.records.push(project);
     return { success: true as const, message: 'Project created successfully', project };
+
+    console.log('AFTER CREATE');
+    console.log(this.records.length);
+    console.log(this.records.at(-1));
   },
 
   async updateProject(id: number, data: ProjectInput) {

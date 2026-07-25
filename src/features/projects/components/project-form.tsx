@@ -21,13 +21,23 @@ export default function ProjectForm({ initialData, pageTitle }: ProjectFormProps
   const router = useRouter();
   const isEdit = initialData !== null;
 
+  // const createMutation = useMutation({
+  //   ...createProjectMutation,
+  //   onSuccess: () => {
+  //     toast.success('Project created successfully');
+  //     router.push('/dashboard/projects');
+  //   },
+  //   onError: () => toast.error('Failed to create project')
+  // });
+
   const createMutation = useMutation({
     ...createProjectMutation,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await createMutation.reset();
+      router.refresh();
+      router.replace('/dashboard/projects');
       toast.success('Project created successfully');
-      router.push('/dashboard/projects');
-    },
-    onError: () => toast.error('Failed to create project')
+    }
   });
 
   const updateMutation = useMutation({

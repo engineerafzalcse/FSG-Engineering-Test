@@ -31,6 +31,8 @@ export function ProjectTable() {
 
   const { data } = useSuspenseQuery(projectsQueryOptions(filters));
 
+  console.log('TABLE DATA', data.projects);
+
   const pageCount = Math.ceil(data.total_projects / params.perPage);
 
   const { table } = useDataTable({
